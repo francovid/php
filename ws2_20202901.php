@@ -143,10 +143,8 @@ function operacion_bd($datos) {
         $datos = $arr1;
     }*/
     $datos = a_array($datos);
-    $cueris = 0;
-    $exitos = 0;
-    $muestra = "";
-    $parentesis = array("(", ")", '"', "'", " ");
+
+    
     foreach ($datos as $key => $value){  
         if ($value['tbl']) 
         {
@@ -159,29 +157,18 @@ function operacion_bd($datos) {
         if($value['tipo_formulario'])
         {
             $ar = array();
-            $arr = array();
             $codigo_usuario = $value['usuario'];
             unset($value['usuario']);
             $tipo_form = $value['tipo_formulario'];
             unset($value['tipo_formulario']);
             if($value['array_cli_mat_pro'])
             {
-                //$acmp = unserialize($value['array_cli_mat_pro']);
-                $acmp = explode("),(", $value['array_cli_mat_pro']);
-
-                foreach($acmp as $q => $b)
-                {
-                    $b = str_replace($parentesis, "", $b);
-                    $ar[] = explode(",", $b);
-                    
-
-                }
-                $acmp = $ar;
+                $acmp = unserialize($value['array_cli_mat_pro']);
                 foreach( $acmp as $q => $b)
                 {
                     #foreach ($b as $k => $v)
                     #{
-                        $arr[$b[0]] = $b[1];
+                        $ar[$b[0]] = $b[1];
                     #}                    
                 }
                 ksort($ar);
@@ -190,9 +177,9 @@ function operacion_bd($datos) {
             }
 
             $dato_validador = $value[$validador][0];
-        $array_cli_mat_pro = $arr;
+        $array_cli_mat_pro = $ar;
         }
-
+ 
         if ($tipo_form == 2 && $solounavez == 0)
         {
                     $array_mat_eje = $value['array_mat_eje'];
@@ -205,6 +192,28 @@ function operacion_bd($datos) {
                     $solounavez = 1;
         }
 
+        /*switch ($tipo_form) { // valida tipo formulario y asigna tabla y unique
+            case 1:
+                // $tbl = "cli_ant_cli";
+                // $validador = "rut";
+                break;
+            case 2:
+                // $tbl = "cli_tab_usu";
+                // $validador = "cod_usu";
+                if ($solounavez == 0)
+                {
+
+                }
+                break;
+            case 3:
+                // $tbl = "cli_eje";
+                // $validador = "cod_eje";
+                break;
+            
+            default:
+                $msg = "no se puede validar tipo ";
+                break;
+        } //switch ($tipo_form)*/
         
         // validamos que venga tipo de formulario y que el id venga 
         if($tipo_form > 0 && is_numeric($tipo_form) && $value[$validador][0] > -1) 
@@ -245,11 +254,8 @@ function operacion_bd($datos) {
                     foreach($value as $k => $v)
                     {
 
-                        if($k == "mat_eje")
-                        {
-                            $v[0] = $row_sql['mat_eje'];
-                        }
-                        if(!empty($v[0]) || $v[0] > -1)
+
+                        if(!empty($v[0]))
                         {
                             if ($k == $validador)
                             {
@@ -265,38 +271,22 @@ function operacion_bd($datos) {
                     $inserta .= " WHERE ".$condicion."';";
 
                     $query .= $inserta;
+                    
 
                 }
                 else
                 {
-                    if ($tipo_form == 2)
-                    {
-                        $select2 = "SELECT MAX(mat_ide) FROM cli_mat_eje; ";
-                        //$msg .= $select2;
-                        $rs_select2 = pg_query($select2);
-                        if ($row_sql2 = pg_fetch_assoc($rs_select2)){
-                            $max_ide = $row_sql2['max'];
-                            ;
-                        }
-                        $max_ide++;
-                    }
-
                     $msg .= " Insert. ";
                     //$msg .= print_r($value, true);
                     $campo = "";
                     $valor = "";
-                    //$muestra = print_r($value, true);
                     foreach($value as $k => $v)
                     {
-                        if($k == "mat_eje")
-                        {
-                            $v[0] = $max_ide;
-                        }
-                        if(!empty($v[0]) || $v[0] > -1)
+
+                        if(!empty($v[0]))
                         {
                             $campo .= $k. ",";
                             // validamos si es integer, caso contrario le ponemos comillas
-                            
                             $valor .= ($v[1] == "int" || $v[0] == "NOW()") ? " ".$v[0].", ":"'".$v[0]."', ";
 
                         }
@@ -319,19 +309,18 @@ function operacion_bd($datos) {
                 if($tipo_form == 1) // verificar si siempre se actualiza.
                 {
                     
+
+                   
                     // actualizar con ultimo campo tabla cli_mat_pro 
                     //insertar nuevo
                     $select2 = "SELECT *
                     FROM cli_mat_pro
                     WHERE pro_rut = '".$value[$validador][0]."' AND flg_del = 0 AND flg_his = 0";
-                    
+                    //$msg .= $select2."<br>";
                     $fecha = date("Y-m-d H:i:s");
                     $rs_select2 = pg_query($select2);
                     $filas = pg_numrows($rs_select2); // entrega la catidad de registros de la query
-                    //$muestra .= print_r($array_cli_mat_pro, true);
-                    if (empty($array_cli_mat_pro)) {$cueris++; $muestra .= "no es array";}
-
-                    //$muestra .= print_r($array_cli_mat_pro, true);
+                    $filas = 1;
                     if ($filas == 0)
                     {
                         $uno = 0;
@@ -340,18 +329,16 @@ function operacion_bd($datos) {
                             $uno++;
                             $query2 = "INSERT INTO cli_mat_pro(pro_rut, pro_tip, item, pro_eje, flg_his, pro_usu_ins, pro_fec_ins, flg_del)
                                     VALUES (".$value[$validador][0].", ".$k.", $uno, '".$v."', 0, '$pro_usu_ins_o', '$fecha', 0);";
-                                    //$muestra .= $query2;
-                            $result = pg_query($query2);
-                            $cueris++;
-                            if ($result){ $exitos++;}
-
+                            pg_query($query2);
+                            //$msg .= $query2."<br>";
                         }
                         
                     }
                     else{
                         
+                        //$codigo_usuario = 1234;
                         $selectb = "SELECT MAX(item) FROM cli_mat_pro WHERE pro_rut = $dato_validador ";
-                        //$muestra .= $selectb;
+                        //$msg .= $selectb;
                         $rs_selectb = pg_query($selectb);
                         if ($row_sqlb = pg_fetch_assoc($rs_selectb)){
                             $maximo = $row_sqlb['max'];
@@ -373,18 +360,14 @@ function operacion_bd($datos) {
                                     $query2 = "UPDATE cli_mat_pro SET usu_act='$codigo_usuario', flg_del=1, pro_fec_del='$fecha' WHERE pro_rut = $dato_validador AND item = $item;";
                                     // $msg .= "<br>padate  ".$query2;
                                     // $msg .= "<br>";
-                                    $result = pg_query($query2); 
-                                    $cueris++;
-                                    if ($result){ $exitos++;}
-                                }
+                                    pg_query($query2);
+                                }                            
                                 if ($array_cli_mat_pro[$i] > -1)
                                 {
                                     $maximo++;
                                     $query2 = "INSERT INTO cli_mat_pro(pro_rut, pro_tip, item, pro_eje, flg_his, pro_usu_ins, pro_fec_ins, flg_del)
                                     VALUES (".$value[$validador][0].", ".$i.", $maximo, '".$array_cli_mat_pro[$i]."', 0, '$codigo_usuario', '$fecha', 0);";
-                                    $result = pg_query($query2);
-                                    $cueris++;
-                                    if ($result){ $exitos++;}
+                                    pg_query($query2);
                                    // $msg .= "<br>no existe:".$i;
                                    // $msg .= "<br>original ".print_r($original, true);
                                     //$msg .= "<br>agregar  ".$query2;
@@ -392,7 +375,31 @@ function operacion_bd($datos) {
 
                           }
                     }
+                     /*
+                    if ($row_sql2 = pg_fetch_assoc($rs_select2))
+                    {
+                        //$msg = print_r($row_sql2, true);
+                        $pro_rut_o      = $row_sql2['pro_rut'];
+                        $item_o         = $row_sql2['item'];
+                        $usu_act         = $row_sql2['pro_usu_ins'];
 
+                        if($usu_act != $pro_usu_ins_o)
+                        {
+                            $query2 = "UPDATE cli_mat_pro SET usu_act='$pro_usu_ins_o', flg_del=1, pro_fec_del='$fecha' WHERE pro_rut = $pro_rut_o AND item = $item_o;";
+                            pg_query($query2);
+                            //$msg .= "<br>";  
+                        }
+                    }
+                    if(($usu_act != $pro_usu_ins_o)|| !($row_sql2 = pg_fetch_assoc($rs_select2)))
+                    {
+                        $item_o++;
+                        $query3 = "INSERT INTO cli_mat_pro(pro_rut, pro_tip, item, pro_eje, flg_his, pro_usu_ins, pro_fec_ins, flg_del)
+                                    VALUES (".$value[$validador][0].", '$pro_tip', $item_o, $pro_eje_o, 0, '$pro_usu_ins_o', '$fecha', 0);";
+                        pg_query($query3);
+                    }
+                    $msg .= $query2;
+                    $msg .= "<br>"; 
+                    $msg .= $query3;*/
 
                 }elseif ($tipo_form == 2) {
                     // actualizar tabla cli_mat_eje 
@@ -407,13 +414,11 @@ function operacion_bd($datos) {
                     //$msg .= "<br>maximo: ".$maximo."<br>"; 
                     //borrar todos los datos de la tablar con el ide que corresponde
                     $select2 = "DELETE FROM cli_mat_eje
-                    WHERE mat_ide = $max_ide;";
+                    WHERE mat_ide = $mat_ide;";
                     $query2 = $select2;
                     //$msg .= $select2;
-                    //pg_query($select2);
-                    $result = pg_query($select2);
-                    
-                    if ($result){ $cueris++; $exitos++;}
+                    pg_query($select2);
+                    $rs_select2 = pg_query($select2);
                     //$msg .= "<br>"; 
                     /*$msg .= print_r($array_mat_eje, true);
                     $msg .= "<br>"; */
@@ -421,13 +426,11 @@ function operacion_bd($datos) {
                     {
                         $maximo++;
                         $query3 = "INSERT INTO cli_mat_eje( mat_cor, mat_ide, mat_eje)
-                                    VALUES ($maximo, $max_ide, $v1);";
+                                    VALUES ($maximo, $mat_ide, $v1);";
                         
                         //$msg .= "<br>"; 
                         //$msg .= $query3;     
-                        $result = pg_query($query3);
-                        $cueris++;
-                        if ($result){ $exitos++;}
+                        pg_query($query3);       
                         
                     }
                         //$msg .= $query2;
@@ -438,8 +441,8 @@ function operacion_bd($datos) {
                     
                     $result = pg_query($query);
                     //$status = pg_result_status($result);
-                    //$muestra = $exitos." - ".$cueris;
-                    if($result && ($exitos == $cueris))
+
+                    if($result)
                     {
                         $sql_res=pg_query("COMMIT");
                         $msg .= "Ingreso exitoso";

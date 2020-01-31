@@ -5,89 +5,43 @@
         $$d = $h;
         //echo "_POST : " . $d . "---" . $h . "<br>";
     }
-    /* if (!$_POST['tipo_ingreso'])
+     /*if (!$_POST['tipo_ingreso'])
     {
-        $rut = "Lorem ipsum dolor sit.10000606"; 
-        $dv = "5"; 
-        $raz_soc = "SOCIEDAD PEREZ Y ACUNA LIMITADA"; 
-        $ape_pat = ""; 
-        $ape_mat = ""; 
-        $dir_cli = "BALMACEDA"; 
-        $rut_con = ""; 
-        $dv_con = ""; 
-        $nom_con = ""; 
-        $ape_pat_con = ""; 
-        $ape_mat_con = ""; 
-        $reg_con = ""; 
-        $id_comuna = "080712"; 
-        $e_mail = "finanzasgymbody@gmail.com"; 
-        $web = ""; 
-        $tip_cli = "2"; 
-        $id_industria = "0"; 
-        $act_desa = "1"; 
-        $n_empleados = "20"; 
-        $his_emp = "La empresa se formo en el año 2011 conformado por don Eduardo Perez perez, don Luis Acuña y Pedro Calderón en primera instancia se creo el gimnasio en la ciudad de laja con un fin social y apoyo a la comunidad, el cual con el paso del tiempo fue (...)"; 
-        $aud_emp = ""; 
-        $fue_fin = ""; 
-        $id_riesgo = "0"; 
-        $fec_riesgo = "2019-02-05"; 
-        $cod_eje = "0"; 
-        $cod_suc = ""; 
-        $flg_del = "0"; 
-        $lgi_usu_ins = "portiz"; 
-        $lgi_usu_upd = ""; 
-        $lgi_usu_del = ""; 
-        $lgi_fec_ins = "2019-02-05 09:35:05-03"; 
-        $lgi_fec_upd = ""; 
-        $lgi_fec_del = ""; 
-        $rie_ope = ""; 
-        $rut_rep_leg = ""; 
-        $dv_rep_leg = ""; 
-        $nom_rep_leg = ""; 
-        $ape_pat_rep = ""; 
-        $ape_mat_rep = ""; 
-        $sexo = "1"; 
-        $flg_his = "0"; 
-        $indice = "308049"; 
-        $for_ope = "Cliente posee gimnasios en los Ángeles, Nacimiento, Laja y Tome, los cuales poseen su administración acá en Los Ángeles, ellos funcionan con planes mensuales, trimestrales y anuales, dependiendo de la solicitud, las maquinarias que ellos poseen son tra (...)"; 
-        $inf_mer = "El mercado del cliente, es toda persona que necesita de sus servicios, ademas de empresas que requieran realizar convenios."; 
-        $inst_emp = "Instalaciones oficinas arrendadas"; 
-        $cli_est_cli = "1"; 
-        $cli_est_ope = ""; 
-        $nro_dir = "374"; 
-        $nro_ofi = ""; 
-        $villa_dir = "LAJA"; 
-        $cod_pos = ""; 
-        $otr_obs = ""; 
-        $rie_com = "0"; 
-        $flg_dicom = "0"; 
-        $cli_pat_dic = "files/Dicom_76157683_perez y acuña 19-02-19.pdf"; 
-        $score_act_datos = ""; 
-        $score_min_datos = ""; 
-        $dic_pro = "0"; 
-        $fec_dic = ""; 
-        $cli_asp_pat = ""; 
-        $cli_asp_fin = ""; 
-        $cli_asp_eco = ""; 
-        $cli_asp_com = ""; 
-        $cli_otr_asp = ""; 
-        $cli_con_clu = ""; 
-        $cli_prime = "0"; 
-        $cod_forma_contac = "6"; 
-        $desc_otros = "CLIENTE CONOCIDO POR EJECUTIVA "; 
-        $flg_acc_web = "1"; 
-        $cod_eje = "999999";
-        $cod_usu = "rlorca_2";
-        $mat_eje = "600";
-        $nom_eje = "rlorca_3";
-        $array_mat_eje = "0,32,140,27,1019,30,129";
-        $pro_usu_ins  = "rlorca_6";
-        $pro_tip        = "999"; // cambiar
-        $pro_eje      = "9999";// cambiar
+        $rut = 20388273;
+        $dv = "4";
+        $raz_soc = "cliente";
+        $ape_pat = "de";
+        $ape_mat = "PRUEBA";
+        $dir_cli = "PASAJE 123";
+        $id_comuna = "130384";
+        $e_mail = 'CLIENTE@PRUEBA.CL';
+        $web = 'WWW.CLIENTEPRUEBA.CL';
+        $tip_cli=1;
+        $act_desa=11101;
+        $n_empleados=60;
+        $his_emp="SIN HISTORIAL";
+        $cod_eje=118;
+        $lgi_usu_ins="PSEGURA";
+        $inst_emp="PROPIA";
+        $cli_est_cli=1;
+        $otr_obs="OK";
+        $cod_forma_contac=1;
+        $flg_acc_web=0;
+        //$array_mat_pro = 'a:4:{i:0;a:2:{i:0;s:1:"4";i:1;s:1:"0";}i:1;a:2:{i:0;s:1:"3";i:1;s:4:"1011";}i:2;a:2:{i:0;s:1:"2";i:1;s:4:"1002";}i:3;a:2:{i:0;s:1:"1";i:1;s:4:"1011";}}';
+        $array_mat_pro = 'a:2:{i:0;a:2:{i:0;s:1:"4";i:1;s:1:"0";}i:1;a:2:{i:0;s:1:"1";i:1;s:4:"1011";}}';
+
         //$array_mat_eje = array ( "0", "32", "140","27","1019","30","129");
+
+        //
         $tipo_ingreso = 1; //cambiar por lo que llegue desde get
     } */
-    //$tipo_ingreso = 1; cambiar por lo que llegue desde get
+
+    //$no_serial = array (array("4", "0") , array("1", "1011"));
+
+    //print_p($no_serial);
+
+    //print_p(serialize($no_serial));exit;
+
 
     switch ($tipo_ingreso) {
         case 1: //clientes
@@ -163,9 +117,11 @@
                         'pro_usu_ins' => array($pro_usu_ins, "str"),
                         'pro_tip' => array($pro_tip, "str"),
                         'pro_eje' => array($pro_eje, "str"),
+                        'array_cli_mat_pro' => $array_mat_pro, // $array_mat_pro = array (0 => array("tipo", "ejecutivo"))
                         'tipo_formulario' => $tipo_ingreso, 
                         'tbl' => "cli_ant_cli", 
-                        'validador' => "rut"
+                        'validador' => "rut",
+                        'usuario' => $lgi_usu_ins
                     );
         break;
         case 2: //usuarios
@@ -197,7 +153,8 @@
 
                                 'tipo_formulario' => $tipo_ingreso, 
                                 'tbl' => "cli_tab_usu", 
-                                'validador' => "cod_usu"
+                                'validador' => "cod_usu",
+                                'usuario' => $usuario
                                 );
             break;
         case 3: //ejecutivos
@@ -206,12 +163,13 @@
                                 'nom_eje' => array($nom_eje, "str"),
                                 'ema_eje' => array($ema_eje, "str"),
                                 'cen_cos' => array($cen_cos, "int"),
-                                'cod_reg' => array($cod_reg, "int"),
+                                //'cod_reg' => array($cod_reg, "int"),
                                 'jef_gru' => array($jef_gru, "str"),
                                 'cod_zon' => array($cod_zon, "int"),
                                 'tipo_formulario' => $tipo_ingreso, 
                                 'tbl' => "cli_eje", 
-                                'validador' => "cod_eje"
+                                'validador' => "cod_eje",
+                                'usuario' => $usuario
                                 );
             break;
         default:
@@ -224,14 +182,41 @@
 
     $cliente = new nusoap_client('http://192.168.0.92/intraincofin/ws/ws2.php?wsdl');
     
-    echo "<pre>";
+    //echo "<pre>";
     // print_r($personas);
     // echo "</pre>";
      
     $ingreso_operacion = array( "ingreso_operacion" => $personas);
 
     $resultado = $cliente->call('operacion_bd',$ingreso_operacion);
-      
-    print_r($resultado);
-     
+    //$cliente->debug();
+    //echo '<pre>' . htmlspecialchars($cliente->request, ENT_QUOTES) . '</pre>';
+//echo '<h2>Response</h2>';
+//$cliente->response;
+
+    //print_r($resultado);exit;
+
+    function array_to_xml( $data, &$xml_data ) {
+        foreach( $data as $key => $value ) {
+            if( is_array($value) ) {
+                if( is_numeric($key) ){
+                    $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                }
+                $subnode = $xml_data->addChild($key);
+                array_to_xml($value, $subnode);
+            } else {
+                $xml_data->addChild("$key",htmlspecialchars("$value"));
+            }
+         }
+    }
+    
+    // initializing or creating array
+    $data = array('total_stud' => 500);
+    
+    // creating object of SimpleXMLElement
+    $xml_data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
+    
+    // function call to convert array to xml
+    array_to_xml($resultado,$xml_data);
+    echo $xml_data->asXML();
 ?>
