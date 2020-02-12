@@ -2,7 +2,7 @@
  require_once('../../../nusoap/lib/nusoap.php');
  require('utiles.php');
     foreach ( $_POST as $d => $h ) {
-        $$d = $h;
+        $$d = trim($h);
         //echo "_POST : " . $d . "---" . $h . "<br>";
     }
      /*if (!$_POST['tipo_ingreso'])
@@ -40,6 +40,14 @@
 
     //print_p($no_serial);
 
+    if($tipo_ingreso == 2 && $array_mat_eje <= -1)
+    {
+        $array_mat_eje = $mat_eje;
+    }
+    if($tipo_ingreso == 1 && $array_mat_pro <= -1)
+    {
+        $array_mat_pro = $cli_mat_pro;
+    }
     //print_p(serialize($no_serial));exit;
 
 
@@ -125,9 +133,12 @@
                     );
         break;
         case 2: //usuarios
+            $cod_eje = 0;
+            if ($cod_suc < 0){ $cod_suc = 1;}
+            
             $personas = array (
-                                'cod_usu' => array($cod_usu, "str"),
-                                'pass_usu' => array($pass_usu, "str"),
+                                'cod_usu' => array(strtolower($cod_usu), "str"),
+                                'pass_usu' => array(strtolower($pass_usu), "str"),
                                 'nom_usu' => array($nom_usu, "str"),
                                 'ult_lgi' => array($ult_lgi, "date"),
                                 'ip_lgi' => array($ip_lgi, "str"),

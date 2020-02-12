@@ -217,11 +217,10 @@ function operacion_bd($datos) {
             {
                 $sql_res=pg_query("BEGIN");
 
-
-
                 $select = "SELECT *
                 FROM $tbl
                 WHERE $validador = '".$value[$validador][0]."'";
+
                 if($tipo_form == 2){ $mat_ide = $value['mat_eje'][0];} // almacenamos ide para eliminacion
                 if($tipo_form == 1){
                     $pro_usu_ins_o = $value['pro_usu_ins'][0];
@@ -248,6 +247,20 @@ function operacion_bd($datos) {
                         if($k == "mat_eje")
                         {
                             $v[0] = $row_sql['mat_eje'];
+                            $max_ide = $row_sql['mat_eje'];
+                        }
+                        if($k == "car_usu")
+                        {
+                            $cargo = strtoupper(trim($v[0]));
+                            $select2 = "SELECT cli_cod_par FROM cli_tab_par WHERE cli_cod_tab = 43 AND upper(cli_glo_par) = '$cargo';";
+                            //$msg .= $select2;
+                            $rs_select2 = pg_query($select2);
+                            if ($row_sql2 = pg_fetch_assoc($rs_select2)){
+                                $cli_cod_par = $row_sql2['cli_cod_par'];
+                                
+                            }
+                            $v[0] = $cli_cod_par;
+
                         }
                         if(!empty($v[0]) || $v[0] > -1)
                         {
@@ -265,7 +278,7 @@ function operacion_bd($datos) {
                     $inserta .= " WHERE ".$condicion."';";
 
                     $query .= $inserta;
-
+                    //$msg .= "<br>".$query;
                 }
                 else
                 {
@@ -276,7 +289,7 @@ function operacion_bd($datos) {
                         $rs_select2 = pg_query($select2);
                         if ($row_sql2 = pg_fetch_assoc($rs_select2)){
                             $max_ide = $row_sql2['max'];
-                            ;
+                           
                         }
                         $max_ide++;
                     }
@@ -291,6 +304,20 @@ function operacion_bd($datos) {
                         if($k == "mat_eje")
                         {
                             $v[0] = $max_ide;
+                        }
+                        
+                        if($k == "car_usu")
+                        {
+                            $cargo = strtoupper(trim($v[0]));
+                            $select2 = "SELECT cli_cod_par FROM cli_tab_par WHERE cli_cod_tab = 43 AND upper(cli_glo_par) = '$cargo';";
+                            //$msg .= $select2;
+                            $rs_select2 = pg_query($select2);
+                            if ($row_sql2 = pg_fetch_assoc($rs_select2)){
+                                $cli_cod_par = $row_sql2['cli_cod_par'];
+                                
+                            }
+                            $v[0] = $cli_cod_par;
+
                         }
                         if(!empty($v[0]) || $v[0] > -1)
                         {
@@ -313,6 +340,21 @@ function operacion_bd($datos) {
                     $query .= $inserta;
                     $msg .= "<br>".$query;
 
+                    if ($tipo_form == 2 && $inserta)
+                    {
+                        //AQUI 
+                        $querypermisos = "INSERT INTO cli_per_usu
+                        SELECT TRIM('".$value['cod_usu'][0]."') as usu_cli, cli_per_pla.basi, finan, legal, manusu, mandefla, manplani, adm_es_apo, 
+                            adm_es_apos, adm_ex_info, adm_ed_apo, priesgo, 0 as mod_fec_visit, 
+                            0 as solic_prorr, null as mod_doc_oper, null as pcontratos 
+                        FROM cli_tab_usu
+                        INNER JOIN cli_per_pla
+                        ON (".$cli_cod_par." = cli_per_pla.perfil)
+                        WHERE cli_tab_usu.cod_usu = '".$value['cod_usu'][0]."';";
+                        $kueri = $querypermisos;
+                        
+                        
+                    }
                     
                 } //else $row_sql = pg_fetch_assoc($rs_select)
                 /********  particular para sistema incofin ********/
@@ -423,14 +465,16 @@ function operacion_bd($datos) {
                         $query3 = "INSERT INTO cli_mat_eje( mat_cor, mat_ide, mat_eje)
                                     VALUES ($maximo, $max_ide, $v1);";
                         
-                        //$msg .= "<br>"; 
-                        //$msg .= $query3;     
+                        // $msg .= "<br>"; 
+                        // $msg .= $query3;     
                         $result = pg_query($query3);
                         $cueris++;
                         if ($result){ $exitos++;}
                         
                     }
                         //$msg .= $query2;
+
+
 
                 }
                 /********  fin particular para sistema incofin ********/
@@ -441,6 +485,10 @@ function operacion_bd($datos) {
                     //$muestra = $exitos." - ".$cueris;
                     if($result && ($exitos == $cueris))
                     {
+                        if ($querypermisos)
+                        {
+                            $result = pg_query($querypermisos);
+                        }
                         $sql_res=pg_query("COMMIT");
                         $msg .= "Ingreso exitoso";
                         $estado = 1;
@@ -470,7 +518,7 @@ function operacion_bd($datos) {
         
 
 
-     return array('mensaje' => $msg, 'estado' => $estado);
+     return array('mensaje' => $msg, 'estado' => $kueri);
     
 }
  
