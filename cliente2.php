@@ -159,7 +159,7 @@
                                 'firma' => array($firma, "str"),
                                 'correo' => array($correo, "str"),
                                 'cod_eje' => array($cod_eje, "int"),
-                                'vig_pass' => array($vig_pass, "int"),
+                                'vig_pass' => array(10000, "int"),
                                 'array_mat_eje' => $array_mat_eje, // array o separado por comas
 
                                 'tipo_formulario' => $tipo_ingreso, 
@@ -204,6 +204,7 @@
     //echo '<pre>' . htmlspecialchars($cliente->request, ENT_QUOTES) . '</pre>';
 //echo '<h2>Response</h2>';
 //$cliente->response;
+
 
     //print_r($resultado);exit;
 

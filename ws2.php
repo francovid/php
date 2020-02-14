@@ -518,7 +518,7 @@ function operacion_bd($datos) {
         
 
 
-     return array('mensaje' => $msg, 'estado' => $kueri);
+     return array('mensaje' => $msg, 'estado' => $estado);
     
 }
  
