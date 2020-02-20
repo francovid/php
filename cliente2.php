@@ -1,31 +1,30 @@
 <?php
- require_once('../../../nusoap/lib/nusoap.php');
- require('utiles.php');
+Header('Content-type: text/xml;  charset=utf-8'); 
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+require_once('../../../nusoap/lib/nusoap.php'); //qa
+//require_once('../../nusoap/lib/nusoap.php'); //prod
+require('utiles.php');
+
+$rut = NULL;$dv = NULL;$raz_soc = NULL;$ape_pat = NULL;$ape_mat = NULL;$dir_cli = NULL;$rut_con = NULL;$dv_con = NULL;$nom_con = NULL;$ape_pat_con = NULL;$ape_mat_con = NULL;
+$reg_con = NULL;$id_comuna = NULL;$e_mail = NULL;$web = NULL;$tip_cli = NULL;$id_industria = NULL;$act_desa = NULL;$n_empleados = NULL;$his_emp = NULL;$aud_emp = NULL;$fue_fin = NULL;
+$id_riesgo = NULL;$fec_riesgo = NULL;$cod_eje = NULL;$cod_suc = NULL;$flg_del = NULL;$lgi_usu_ins = NULL; $lgi_usu_upd = NULL;$lgi_usu_del = NULL;$lgi_fec_ins = NULL;$lgi_fec_upd = NULL;
+$lgi_fec_del = NULL;$rie_ope = NULL;$rut_rep_leg = NULL;$dv_rep_leg = NULL;$nom_rep_leg = NULL;$ape_pat_rep = NULL;$ape_mat_rep = NULL;$sexo = NULL;$flg_his = NULL;$indice = NULL;$for_ope = NULL;
+$inf_mer = NULL;$inst_emp = NULL;$cli_est_cli = NULL;$cli_est_ope = NULL;$nro_dir = NULL;$nro_ofi = NULL;$villa_dir = NULL;$cod_pos = NULL;$otr_obs = NULL;$rie_com = NULL;$flg_dicom = NULL;
+$cli_pat_dic = NULL;$score_act_datos = NULL;$score_min_datos = NULL;$dic_pro = NULL;$fec_dic = NULL;$cli_asp_pat = NULL;$cli_asp_fin = NULL;$cli_asp_eco = NULL;$cli_asp_com = NULL;
+$cli_otr_asp = NULL;$cli_con_clu = NULL;$cli_prime = NULL;$cod_forma_contac = NULL;$desc_otros = NULL;$flg_acc_web = NULL;$pro_usu_ins = NULL;$pro_tip = NULL;$pro_eje = NULL;$array_mat_pro = NULL;
+$tipo_ingreso = NULL;$lgi_usu_ins = NULL;
+ if($_POST){
     foreach ( $_POST as $d => $h ) {
         $$d = trim($h);
         //echo "_POST : " . $d . "---" . $h . "<br>";
     }
      /*if (!$_POST['tipo_ingreso'])
     {
-        $rut = 20388273;
-        $dv = "4";
-        $raz_soc = "cliente";
-        $ape_pat = "de";
-        $ape_mat = "PRUEBA";
-        $dir_cli = "PASAJE 123";
-        $id_comuna = "130384";
-        $e_mail = 'CLIENTE@PRUEBA.CL';
-        $web = 'WWW.CLIENTEPRUEBA.CL';
-        $tip_cli=1;
-        $act_desa=11101;
-        $n_empleados=60;
-        $his_emp="SIN HISTORIAL";
-        $cod_eje=118;
-        $lgi_usu_ins="PSEGURA";
-        $inst_emp="PROPIA";
-        $cli_est_cli=1;
-        $otr_obs="OK";
-        $cod_forma_contac=1;
+        $rut = 20388273; $dv = "4"; $raz_soc = "cliente"; $ape_pat = "de"; $ape_mat = "PRUEBA";
+        $dir_cli = "PASAJE 123"; $id_comuna = "130384"; $e_mail = 'CLIENTE@PRUEBA.CL'; $web = 'WWW.CLIENTEPRUEBA.CL';
+        $tip_cli=1; $act_desa=11101; $n_empleados=60; $his_emp="SIN HISTORIAL"; $cod_eje=118;
+        $lgi_usu_ins="PSEGURA"; $inst_emp="PROPIA"; $cli_est_cli=1; $otr_obs="OK"; $cod_forma_contac=1;
         $flg_acc_web=0;
         //$array_mat_pro = 'a:4:{i:0;a:2:{i:0;s:1:"4";i:1;s:1:"0";}i:1;a:2:{i:0;s:1:"3";i:1;s:4:"1011";}i:2;a:2:{i:0;s:1:"2";i:1;s:4:"1002";}i:3;a:2:{i:0;s:1:"1";i:1;s:4:"1011";}}';
         $array_mat_pro = 'a:2:{i:0;a:2:{i:0;s:1:"4";i:1;s:1:"0";}i:1;a:2:{i:0;s:1:"1";i:1;s:4:"1011";}}';
@@ -50,7 +49,8 @@
     }
     //print_p(serialize($no_serial));exit;
 
-
+}
+else{ $tipo_ingreso = 1;}
     switch ($tipo_ingreso) {
         case 1: //clientes
             $personas =  array('rut' => array($rut, "int"), // replica en cli_mat_pro pro_rut
@@ -161,7 +161,6 @@
                                 'cod_eje' => array($cod_eje, "int"),
                                 'vig_pass' => array(10000, "int"),
                                 'array_mat_eje' => $array_mat_eje, // array o separado por comas
-
                                 'tipo_formulario' => $tipo_ingreso, 
                                 'tbl' => "cli_tab_usu", 
                                 'validador' => "cod_usu",
@@ -184,14 +183,16 @@
                                 );
             break;
         default:
-        # code...
+        $personas = array (
+                            'tipo_formulario' => $tipo_ingreso
+                            );
         break;
     }
 
 
 
-
-    $cliente = new nusoap_client('http://192.168.0.92/intraincofin/ws/ws2.php?wsdl');
+    $servidorWeb = $_SERVER['SERVER_NAME'];
+    $cliente = new nusoap_client('http://'.$servidorWeb.'/intraincofin/ws/ws2.php?wsdl');
     
     //echo "<pre>";
     // print_r($personas);
@@ -226,9 +227,15 @@
     $data = array('total_stud' => 500);
     
     // creating object of SimpleXMLElement
-    $xml_data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
+    /*$xml_data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');*/
+    $xml_data = new SimpleXMLElement('text.xml', 0, true);
     
     // function call to convert array to xml
+    if(!is_array($resultado)){
+        
+        $resultado = array('mensaje' =>'nada para mostrar');
+    }
     array_to_xml($resultado,$xml_data);
     echo $xml_data->asXML();
+
 ?>

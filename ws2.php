@@ -143,9 +143,9 @@ function operacion_bd($datos) {
         $datos = $arr1;
     }*/
     $datos = a_array($datos);
-    $cueris = 0;
-    $exitos = 0;
-    $muestra = "";
+    $cueris = 0; // acumula la cantidad de veces que se ejecuta una query, se contrasta con $exitos para validar la transacion
+    $exitos = 0;// acumula la cantidad de veces que una query tiene exito, se contrasta con $cueris para validar la transacion
+    //$muestra = ""; // variable para mostrar informacion, ya no se esta usando
     $parentesis = array("(", ")", '"', "'", " ");
     foreach ($datos as $key => $value){  
         if ($value['tbl']) 
@@ -224,8 +224,8 @@ function operacion_bd($datos) {
                 if($tipo_form == 2){ $mat_ide = $value['mat_eje'][0];} // almacenamos ide para eliminacion
                 if($tipo_form == 1){
                     $pro_usu_ins_o = $value['pro_usu_ins'][0];
-                    $pro_eje_o = $value['pro_eje'][0];
-                    $pro_tip = $value['pro_tip'][0];
+                    //$pro_eje_o = $value['pro_eje'][0];
+                    //$pro_tip = $value['pro_tip'][0];
                     unset($value['pro_usu_ins']);
                     unset($value['pro_eje']);
                     unset($value['pro_tip']);
@@ -342,7 +342,7 @@ function operacion_bd($datos) {
 
                     if ($tipo_form == 2 && $inserta)
                     {
-                        //AQUI 
+                        //asigna los permisos segun usuario que envien 
                         $querypermisos = "INSERT INTO cli_per_usu
                         SELECT TRIM('".$value['cod_usu'][0]."') as usu_cli, cli_per_pla.basi, finan, legal, manusu, mandefla, manplani, adm_es_apo, 
                             adm_es_apos, adm_ex_info, adm_ed_apo, priesgo, 0 as mod_fec_visit, 
@@ -351,7 +351,7 @@ function operacion_bd($datos) {
                         INNER JOIN cli_per_pla
                         ON (".$cli_cod_par." = cli_per_pla.perfil)
                         WHERE cli_tab_usu.cod_usu = '".$value['cod_usu'][0]."';";
-                        $kueri = $querypermisos;
+                        //$kueri = $querypermisos;
                         
                         
                     }
@@ -371,7 +371,7 @@ function operacion_bd($datos) {
                     $rs_select2 = pg_query($select2);
                     $filas = pg_numrows($rs_select2); // entrega la catidad de registros de la query
                     //$muestra .= print_r($array_cli_mat_pro, true);
-                    if (empty($array_cli_mat_pro)) {$cueris++; $muestra .= "no es array";}
+                if (empty($array_cli_mat_pro)) {$cueris++; /*$muestra .= "no es array";*/ }
 
                     //$muestra .= print_r($array_cli_mat_pro, true);
                     if ($filas == 0)
@@ -437,7 +437,7 @@ function operacion_bd($datos) {
 
 
                 }elseif ($tipo_form == 2) {
-                    // actualizar tabla cli_mat_eje 
+                    // actualizar tabla cli_mat_eje html
                     // sacar el ultimo id para indrementar
                     $select2 = "SELECT MAX(mat_cor) FROM cli_mat_eje; ";
                     //$msg .= $select2;
@@ -501,8 +501,6 @@ function operacion_bd($datos) {
                     }
 
 
-
-
             //$msg .= "<br>";
             } // else !$conn
 
@@ -514,10 +512,6 @@ function operacion_bd($datos) {
         }
 
     } 
-        
-        
-
-
      return array('mensaje' => $msg, 'estado' => $estado);
     
 }

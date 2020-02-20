@@ -38,7 +38,6 @@ $server->register(   'operacion_bd', // metodo o funcion
 
 function operacion_bd($datos) {
     require_once('../conexion/conexion.php');
-    $solounavez = 0;
 
     $datos = a_array($datos); // esto lo convierte en array en caso de que no lo sea
     
@@ -50,18 +49,6 @@ function operacion_bd($datos) {
             unset($value['tbl']);
             unset($value['validador']);  
         }
-
-        if ($value['tipo_formulario'] == 2 && $solounavez == 0) // **solo para incofin**
-        {
-                    $array_mat_eje = $value['array_mat_eje'];
-                    if(!is_array($array_mat_eje))
-                    {
-                        $arr_1 = explode(",",$array_mat_eje);
-                        $array_mat_eje = $arr_1;
-                    }
-                    unset($value['array_mat_eje']);
-                    $solounavez = 1;
-        } // **solo para incofin**
         
         // validamos que venga tipo de formulario y que el id venga 
         if($value['tipo_formulario'] > 0 && is_numeric($value['tipo_formulario']) && $value[$validador][0] > -1) 
