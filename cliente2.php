@@ -232,8 +232,8 @@ else{ $tipo_ingreso = 1;}
     
     // function call to convert array to xml
     if(!is_array($resultado)){
-        
-        $resultado = array('mensaje' =>'nada para mostrar');
+        $varible = $tipo_ingreso;
+        $resultado = array('mensaje' =>'nada para mostrar'.$varible);
     }
     array_to_xml($resultado,$xml_data);
     echo $xml_data->asXML();
