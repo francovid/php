@@ -192,7 +192,7 @@ else{ $tipo_ingreso = 1;}
 
 
     $servidorWeb = $_SERVER['SERVER_NAME'];
-    $cliente = new nusoap_client('http://'.$servidorWeb.'/intraincofin/ws/ws2.php?wsdl');
+    $cliente = new nusoap_client('http://'.$servidorWeb.'/intraincofin_qa/ws/ws2.php?wsdl');//quitar _qa para otros server
     
     //echo "<pre>";
     // print_r($personas);

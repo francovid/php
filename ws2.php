@@ -14,75 +14,7 @@ $tipo_ingreso = 1; //cambiar por lo que llegue desde get
 switch ($tipo_ingreso) {
     case 1: //clientes
         $array_entrada = array(
-            'rut' => array('name' => 'rut','type' => 'xsd:string'),/*
-            'dv' => array('name' => 'dv','type' => 'xsd:string'),
-            'raz_soc' => array('name' => 'raz_soc','type' => 'xsd:string'),
-            'ape_pat' => array('name' => 'ape_pat','type' => 'xsd:string'),
-            'ape_mat' => array('name' => 'ape_mat','type' => 'xsd:string'),
-            'dir_cli' => array('name' => 'dir_cli','type' => 'xsd:string'),
-            'rut_con' => array('name' => 'rut_con','type' => 'xsd:string'),
-            'dv_con' => array('name' => 'dv_con','type' => 'xsd:string'),
-            'nom_con' => array('name' => 'nom_con','type' => 'xsd:string'),
-            'ape_pat_con' => array('name' => 'ape_pat_con','type' => 'xsd:string'),
-            'ape_mat_con' => array('name' => 'ape_mat_con','type' => 'xsd:string'),
-            'reg_con' => array('name' => 'reg_con','type' => 'xsd:string'),
-            'id_comuna' => array('name' => 'id_comuna','type' => 'xsd:string'),
-            'e_mail' => array('name' => 'e_mail','type' => 'xsd:string'),
-            'web' => array('name' => 'web','type' => 'xsd:string'),
-            'tip_cli' => array('name' => 'tip_cli','type' => 'xsd:string'),
-            'id_industria' => array('name' => 'id_industria','type' => 'xsd:string'),
-            'act_desa' => array('name' => 'act_desa','type' => 'xsd:string'),
-            'n_empleados' => array('name' => 'n_empleados','type' => 'xsd:string'),
-            'his_emp' => array('name' => 'his_emp','type' => 'xsd:string'),
-            'aud_emp' => array('name' => 'aud_emp','type' => 'xsd:string'),
-            'fue_fin' => array('name' => 'fue_fin','type' => 'xsd:string'),
-            'id_riesgo' => array('name' => 'id_riesgo','type' => 'xsd:string'),
-            'fec_riesgo' => array('name' => 'fec_riesgo','type' => 'xsd:string'),
-            'cod_eje' => array('name' => 'cod_eje','type' => 'xsd:string'),
-            'cod_suc' => array('name' => 'cod_suc','type' => 'xsd:string'),
-            'flg_del' => array('name' => 'flg_del','type' => 'xsd:string'),
-            'lgi_usu_ins' => array('name' => 'lgi_usu_ins','type' => 'xsd:string'),
-            'lgi_usu_upd' => array('name' => 'lgi_usu_upd','type' => 'xsd:string'),
-            'lgi_usu_del' => array('name' => 'lgi_usu_del','type' => 'xsd:string'),
-            'lgi_fec_ins' => array('name' => 'lgi_fec_ins','type' => 'xsd:string'),
-            'lgi_fec_upd' => array('name' => 'lgi_fec_upd','type' => 'xsd:string'),
-            'lgi_fec_del' => array('name' => 'lgi_fec_del','type' => 'xsd:string'),
-            'rie_ope' => array('name' => 'rie_ope','type' => 'xsd:string'),
-            'rut_rep_leg' => array('name' => 'rut_rep_leg','type' => 'xsd:string'),
-            'dv_rep_leg' => array('name' => 'dv_rep_leg','type' => 'xsd:string'),
-            'nom_rep_leg' => array('name' => 'nom_rep_leg','type' => 'xsd:string'),
-            'ape_pat_rep' => array('name' => 'ape_pat_rep','type' => 'xsd:string'),
-            'ape_mat_rep' => array('name' => 'ape_mat_rep','type' => 'xsd:string'),
-            'sexo' => array('name' => 'sexo','type' => 'xsd:string'),
-            'flg_his' => array('name' => 'flg_his','type' => 'xsd:string'),
-            'indice' => array('name' => 'indice','type' => 'xsd:string'),
-            'for_ope' => array('name' => 'for_ope','type' => 'xsd:string'),
-            'inf_mer' => array('name' => 'inf_mer','type' => 'xsd:string'),
-            'inst_emp' => array('name' => 'inst_emp','type' => 'xsd:string'),
-            'cli_est_cli' => array('name' => 'cli_est_cli','type' => 'xsd:string'),
-            'cli_est_ope' => array('name' => 'cli_est_ope','type' => 'xsd:string'),
-            'nro_dir' => array('name' => 'nro_dir','type' => 'xsd:string'),
-            'nro_ofi' => array('name' => 'nro_ofi','type' => 'xsd:string'),
-            'villa_dir' => array('name' => 'villa_dir','type' => 'xsd:string'),
-            'cod_pos' => array('name' => 'cod_pos','type' => 'xsd:string'),
-            'otr_obs' => array('name' => 'otr_obs','type' => 'xsd:string'),
-            'rie_com' => array('name' => 'rie_com','type' => 'xsd:string'),
-            'flg_dicom' => array('name' => 'flg_dicom','type' => 'xsd:string'),
-            'cli_pat_dic' => array('name' => 'cli_pat_dic','type' => 'xsd:string'),
-            'score_act_datos' => array('name' => 'score_act_datos','type' => 'xsd:string'),
-            'score_min_datos' => array('name' => 'score_min_datos','type' => 'xsd:string'),
-            'dic_pro' => array('name' => 'dic_pro','type' => 'xsd:string'),
-            'fec_dic' => array('name' => 'fec_dic','type' => 'xsd:string'),
-            'cli_asp_pat' => array('name' => 'cli_asp_pat','type' => 'xsd:string'),
-            'cli_asp_fin' => array('name' => 'cli_asp_fin','type' => 'xsd:string'),
-            'cli_asp_eco' => array('name' => 'cli_asp_eco','type' => 'xsd:string'),
-            'cli_asp_com' => array('name' => 'cli_asp_com','type' => 'xsd:string'),
-            'cli_otr_asp' => array('name' => 'cli_otr_asp','type' => 'xsd:string'),
-            'cli_con_clu' => array('name' => 'cli_con_clu','type' => 'xsd:string'),
-            'cli_prime' => array('name' => 'cli_prime','type' => 'xsd:string'),
-            'cod_forma_contac' => array('name' => 'cod_forma_contac','type' => 'xsd:string'),
-            'desc_otros' => array('name' => 'desc_otros','type' => 'xsd:string'),
-            'flg_acc_web' => array('name' => 'flg_acc_web','type' => 'xsd:string'),*/
+            'rut' => array('name' => 'rut','type' => 'xsd:string'),
             );
         break;
     case 22: //usuarios
@@ -256,7 +188,7 @@ function operacion_bd($datos) {
                         {
                             $cargo = strtoupper(trim($v[0]));
                             $select2 = "SELECT cli_cod_par FROM cli_tab_par WHERE cli_cod_tab = 43 AND upper(cli_glo_par) = '$cargo';";
-                            //$msg .= $select2;
+                            $msg .= $select2;
                             $rs_select2 = pg_query($select2);
                             if ($row_sql2 = pg_fetch_assoc($rs_select2)){
                                 $cli_cod_par = $row_sql2['cli_cod_par'];
