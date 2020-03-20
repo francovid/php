@@ -283,7 +283,7 @@ function operacion_bd($datos) {
 
                     if ($tipo_form == 2 && $inserta)
                     {
-                        //AQUI 
+                        // PERMISOS POR PERFIL USUARIO
                         $querypermisos = "INSERT INTO cli_per_usu
                         SELECT TRIM('".$value['cod_usu'][0]."') as usu_cli, cli_per_pla.basi, finan, legal, manusu, mandefla, manplani, adm_es_apo, 
                             adm_es_apos, adm_ex_info, adm_ed_apo, priesgo, 0 as mod_fec_visit, 
